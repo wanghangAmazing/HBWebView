@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>本地网页</title>
+            <style>
+                button {
+                    border: 2px;
+                    width: 800px;
+                    height: 100px;
+                    background-color: orangered;
+                    color: white;
+                    font-size: 32px;
+                    border-radius: 6px;
+                } </style>
+            </head>
+    <body>
+        
+        <h1></h1>
+        <div style="margin-top:2em;" align="center">
+            <button type="button", id="button1">Test</button>
+            <p></p>
+            <button type="button", id="button2">返回上一个界面</button>
+            <p></p>
+            <button type="button", id="button3">加载百度首页</button>
+        </div>
+    </body>
+    
+    <script>
+        
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+            if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'https://__bridge_loaded__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+        }
+    
+    function showAlter() {
+        alert("123456");
+    }
+    
+    setupWebViewJavascriptBridge(function(bridge) {
+                                 
+                                 /* Initialize your app here */
+                                 document.getElementById('button1').onclick = function() {
+                                 bridge.callHandler('JSTest', {'key':'value'}, function responseCallback(responseData) {
+                                                    //console.log("JS received response:", responseData)
+                                                    alert(responseData)
+                                                    })
+                                 }
+                                 
+                                 document.getElementById('button2').onclick = function() {
+                                 bridge.callHandler('GoBack', null, function responseCallback(responseData) {
+                                                    
+                                                    })
+                                 }
+                                 
+                                 document.getElementById('button3').onclick = function() {
+                                 bridge.callHandler('NewWeb', "https://www.baidu.com", function responseCallback(responseData) {
+                                                    
+                                                    })
+                                 }
+                                 
+                                 })
+                                 
+                                 
+                                 </script>
+    
+</html>
