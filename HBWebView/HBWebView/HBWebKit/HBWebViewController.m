@@ -37,7 +37,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.webView.frame = self.view.bounds;
-    self.progressView.frame = CGRectMake(0, 64, CGRectGetWidth(self.view.bounds), 5);
+    self.progressView.frame = CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), CGRectGetWidth(self.view.bounds), 5);
 }
 
 - (void)setupNavgationBar {
